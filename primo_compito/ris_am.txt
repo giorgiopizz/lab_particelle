@@ -1,0 +1,32 @@
+Picco americio(Canale):	3969.71
+Energia calcolata(KeV):	5442.03
+Errore picco(unità canale):	0.833232
+Errore energia(KeV):	57.2592
+Difference(val-val_true):	-54.0272
+t:	0.943555
+
+
+Picco americio(Canale):	4006.21
+Energia calcolata(KeV):	5490.1
+Errore picco(unità canale):	0.256985
+Errore energia(KeV):	57.7759
+Difference(val-val_true):	-47.1037
+t:	0.815282
+
+
+Picco americio(Canale):	4035.94
+Energia calcolata(KeV):	5529.27
+Errore picco(unità canale):	0.0493499
+Errore energia(KeV):	58.2036
+Difference(val-val_true):	-43.2683
+t:	0.743395
+
+
+Picco americio(Canale):	4061.57
+Energia calcolata(KeV):	5563.03
+Errore picco(unità canale):	0.866191
+Errore energia(KeV):	58.5842
+Difference(val-val_true):	-18.0256
+t:	0.307687
+
+

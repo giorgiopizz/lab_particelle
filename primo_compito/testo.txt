@@ -1,0 +1,97 @@
+Cari Studenti,
+purtroppo l'emergenza dovuta al virus SARS-CoV-2 e' lontana dall'essere superata e, probabilmente, le misure coercitive verranno estese oltre il 3 Aprile. Questo significa che, ad oggi, non possiamo sapere quando e se sarà possibile entrare in laboratorio.
+
+Per non perdere ulteriore tempo abbiamo deciso iniziare ad erogare il corso in modalità a distanza. 
+Questa modalità consisterà in video-lezioni e compiti da eseguire a casa che poi verranno valutati e giudicati.
+
+Il vostro primo compito sara' l'analisi di dati relativi alla caratterizzazione di un rivelatore a semiconduttore (Silicio) a barriera superficiale.
+Questa tipologia di rivelatori sono tipicamente utilizzati nell'ambito della spettroscopia alfa.
+Il loro funzionamento, e il modo in cui il loro segnale viene amplificato e condizionato, e' stato illustrato nelle lezioni introduttive. 
+Per un eventuale ripasso/approfondimento potete consultare i seguenti libri:
+
+Glenn F. Knoll, "Radiation Detection and Measurement"
+Chapter 1: Radiation Sources
+Chapter 2: Radiation Interactions
+Chapter 11: Semiconductor Diode Detectors
+Chapter 16: Pulse Processing
+Chapter 18: Multichannel Pulse Analysis
+S.Landsberg. N.Tsoulfanidis, "Measurement And Detection Of Radiation
+Chapter 1: Introduction to Radiation Measurements
+Chapter 3: Review of Atomic and Nuclear Physics
+Chapter 4: Energy Loss and Penetration of Radiation through Matter
+Chapter 7: Semiconductor Detectors
+S. Tavernier, "Experimental Techniques in Nuclear and Particle Physics"
+Chapter 1: Introduction, Nuclei and Nuclear Decay, The Alpha Decay
+Chapter 1: Interactions of Particles in Matter
+Chapter 5: Detectors Based on Ionization in Semiconductor Materials, Silicon Semiconductor Detectors
+In allegato trovate anche delle slides sulle tecniche utilizzate per leggere e trattare segnali provenienti dai rivelatori tipici che si trovano in laboratorio (rivelatori al Silicio, al Germanio, fotomoltiplicatori, SiPM, etc).
+
+Introduzione al compito
+L'obiettivo di questa esperienza è lo studio delle interazioni delle particelle alfa con la materia. 
+L’esperimento prevederebbe una prima fase di allestimento, ottimizzazione e caratterizzazione dei rivelatori ed una seconda fase di misure dedicate allo studio dei processi di interazione.
+La parte di allestimento e ottimizzazione vi verrà eventualmente illustrata al ritorno ai lab o per video lezione. 
+Quello che vi viene chiesto in questo compito è di cercare di comprendere come sono state eseguite delle misure di caratterizzazione precedentemente acquisite e di effettuarne l'analisi.
+
+Strumentazione utilizzata
+Un Crate NIM per alimentazione di moduli di elettronica standard
+Un modulo 7401-7401VR Alpha Spectrometer CANBERRA, completo di
+camera a vuoto con alloggiamento per il rivelatore;
+sistema di alimentazione del rivelatore;
+catena di lettura con preamplificatore di carica ed amplificatore formatore integrati;
+impulsatore calibrato in energia
+Scheda ADC/MCA CAEN N957 (8k Channel Multichannel Analyzer)
+PC di controllo per la scheda ADC/MCA
+Pompa rotativa e circuito per l’evacuazione della camera
+Rivelatori di Si a barriera superficiale ULTRA AS (ORTEC) da 900 mm2 di area
+Una sorgente alpha 241-Am
+A questo link (https://bit.ly/3a5XmSl) trovate la documentazione relativa alla strumentazione utilizzata. 
+Tale documentazione non va studiata nel dettaglio ma va, eventualmente, consultata. 
+ 
+Il rivelatore al Silicio è posto in una camera a vuoto, e il suo segnale è acquisito con una catena lettura classica: 
+(pre-amplificatore → amplificatore → shaper) → ADC/MCA.
+La strumentazione tra parentesi è tutta integrata all'interno del modulo 7401-7401VR.
+Il rivelatore è completamente svuotato per tensioni di polarizzazione da 40 V sino a 80 V.
+In questo caso specifico è stato polarizzato con un tensione di 50 V.
+
+Di seguito e' illustrato come sono state eseguite le misure di caratterizzazione.
+
+Caratterizzazione con impulsatore calibrato in energia
+La catena di lettura del rivelatore fornisce la possibilità di inviare una serie di impulsi elettrici in grado di generare segnali in uscita all'elettronica la cui forma risulta analoga a quella proveniente dai rivelatori dopo un'interazione alfa.
+L'ampiezza di questi impulsi è calibrata in energia dal costruttore quindi, tramite l'impulsatore, è possibile determinare la corrispondenza Energia ↔ Tensione in mV acquisita dall'ADC/MCA. 
+La misura consiste, dunque, nel fissare l'ampiezza (e quindi l'energia) dell'impulsatore e nel misurare la posizione del picco risultante (espressa in mV). 
+La posizione del picco può essere determinata eseguendo un'estrapolazione gaussiana.
+Eseguendo questa misura a diverse energie è possibile ottenere una curva di calibrazione Energia vs. mV.
+Sarà vostra cura determinare quale possa essere il miglior modello analitico in grado di descrivere questa curva, e di valutare quale possa essere l'errore percentuale nel caso si consideri un modello puramente lineare.
+
+I dati relativi a questa calibrazione li trovate a questo link: https://bit.ly/3a7f8Ve
+Nel nome del file e' indicata l'energia dell'impulsatore, mentre la quarta colonna rappresenta i campionamenti espressi in mV, acquisiti in funzione del tempo. 
+Da questi ultimi dovrete create una distribuzione (istogramma) necessaria per determinare la posizione del picco.
+
+Caratterizzazione con sorgente di 241-Am
+In questo caso nella camera e' stata inserita una sorgente di 241-Am e, dopo averla evacuata, è stato misurato lo spettro in energia.
+Sara vostra cura analizzare le distribuzioni ottenute, riconoscendo le righe tipiche dell'emissione alfa della sorgente.
+La risoluzione del rivelatore dovrebbe essere attorno ai 30/40 keV, questo significa che se i picchi risultano vicini il rivelatore non riesce a risolverli totalmente: nell'interpolare i picchi questo va tenuto in conto.
+Da questa misura dovrete verificare la calibrazione effettuata in precedenza con l'impulsatore e misurare la risoluzione in energia del rivelatore.
+Infine, confrontando i risultati ottenuti con l'impulsatore con quelli ottenuti con la sorgente dovrete fare alcune riflessioni sugli effetti che contribuiscono alla risoluzione in energetica (statistica di coppie elettrone-lacuna, incompleta raccolta, termine elettronico) 
+
+I dati relativi a questa calibrazione li trovate a questo link: https://bit.ly/3999pwG
+Il formato è analogo a quello precedente.
+
+Per l'analisi dei dati potete utilizzare sia il C/C++ sfruttando il framework ROOT sia Python con il suo ambiente matematico (numpy, scipy, matplotlib, etc). L'importante è che ogni risultato, estrapolazione e stima sia corredata da corrispettivi errori, chi2, residui, etc.
+
+Modalità di consegna dei risultati
+Ogni gruppo (trovate la composizione aggiornata sulla pagine e-learning del corso) dovrà consegnare per via telematica un report (quindi più sintetico di una relazione) sull'esperienza.
+Ogni report dovrà comprendere:
+Una breve parte introduttiva dove viene spiegata l'esperienza, compatibilmente con il fatto che non sia stata eseguita da voi in prima persona;
+Una parte di analisi dei dati;
+Una parte di considerazioni sui dati ottenuti.
+Tali report dovranno essere consegnati attraverso un google form entro il 6 Aprile 2020 e la valutazione andrà a contribuire al voto finale del laboratorio.
+
+Per qualsiasi domanda o dubbio non esitate a contattarci; saremo disponibili a qualsiasi chiarimento anche utilizzando i sistemi ufficiali di video chiamata di ateneo (Google Meet, WebEx, etc)
+
+Cordialmente,
+
+I docenti,
+
+Andrea Giachero,
+Silvia Capelli

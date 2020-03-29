@@ -1,0 +1,10 @@
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_3.09MeV_copia.txt	34933    2140    30    3.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_7.09MeV.txt	42151  5200    17    7.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_9.98MeV.txt	33006  7370    24    9.98MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_2.09MeV_copia.txt	64667    1390    24    2.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_6.09MeV.txt	33357  4440    20    6.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_8.09MeV.txt	49141  5960    19    8.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_5.09MeV.txt	38865  3680    15    5.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_1.10MeV.txt	33128  640 20 1.10MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_9.09MeV.txt	32353  6700    22    9.09MeV
+/Users/giorgio/Desktop/particelle/primo_compito/Pulser/PulserCal_4.09MeV.txt	32927  2920    14    4.09MeV
