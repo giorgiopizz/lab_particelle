@@ -197,6 +197,18 @@ int main(int argc, char ** argv){
         }
         myfile.close();
 
+        myfile.open("risoluzione_am.txt");
+        for(int i=0;i<4;i++){
+            myfile << real_energies[i] << "\t" << 2.35*r->Parameter(3*i+2)/r->Parameter(3*i+1) <<"\t"<< 100 <<"\t"<< (2.35*r->Parameter(3*i+2)/r->Parameter(3*i+1))/100 <<endl;
+        }
+        myfile.close();
+
+        myfile.open("fwhm_am.txt");
+        for(int i=0;i<4;i++){
+            myfile << real_energies[i] << "\t" << 2.35*r->Parameter(3*i+2) <<"\t"<< 100 <<"\t"<< (2.35*r->Parameter(3*i+2))/100 <<endl;
+        }
+        myfile.close();
+
 
         /*
         float m,m_err,q,q_err,m2,m2_err;
