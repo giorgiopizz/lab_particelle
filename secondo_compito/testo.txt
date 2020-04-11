@@ -1,0 +1,124 @@
+la seconda esperienza "virtuale" tratterà una diversa tipologia di rivelatori a semiconduttore ovvero i rivelatori al Germanio (High-Purity Germanium detectors, HPGe) per spettroscopia gamma.
+
+Il funzionamento dei rivelatori al Germanio, e il modo in cui il loro segnale viene amplificato e condizionato, è stato illustrato nelle lezioni introduttive.
+Per un eventuale ripasso/approfondimento potete consultare il materiale che ho caricato a questo link: https://bit.ly/2Ro2vh2
+Qui trovate anche i libri che vi ho consigliato nella scorsa esperienza.
+
+L'esperienza è divisa in due parti, ognuna della quale relativa un germanio differente.
+
+Introduzione al compito
+L'obiettivo di questa esperienza è lo studio delle interazioni delle particelle gamma con la materia.
+Come già detto nel caso del primo report, l’esperimento prevederebbe una prima fase di allestimento, ottimizzazione e caratterizzazione dei rivelatori ed una seconda fase di misure dedicate allo studio dei processi di interazione.
+La parte di allestimento e ottimizzazione vi verrà eventualmente illustrata al ritorno presso il laboratorio o, in alternativa, per video lezione.  
+Quello che vi viene chiesto in questo compito è di cercare di comprendere come sono state eseguite delle misure di caratterizzazione e di effettuarne l'analisi.
+
+Parte 1
+1.1 Strumentazione utilizzata
+La strumentazione utilizzata è quella presente nel laboratorio di Esperimentazioni di Fisica Nucleare e Subnucleare.
+Crate NIM per l'alimentazione dei moduli di elettronica standard;
+Rivelatore coassiale HPGe (Ortec Coaxial HPGe Detector GEM20P)
+Generatore HV Laben Model 8124 per generare la tensione di polarizzazione per il rivelatore (e per alimentare il pre-amplificatore);
+Amplificatore CAEN Model N968 per amplificare e formare il segnale;
+ADC/MCA CAEN Model N957 per digitalizzare il segnale;
+Sorgenti di calibrazione: 22Na, 60Co, 228Th
+A questo link (https://bit.ly/3c4K6h8) trovate la documentazione relativa alla strumentazione utilizzata.
+Come già detto, tale documentazione non va studiata nel dettaglio ma, eventualmente, va consultata.
+
+Il rivelatore al Germanio è inserito all'interno di un dewar e mantenuto a 77 K grazie ad un bagno in azoto liquido.
+Nel caso del Germanio il gap di banda è piuttosto basso (0.67 eV contro 1.12 eV del Silicio) quindi non è possibile utilizzare un rivelatore di questo tipo a temperatura ambiente, in quanto la corrente oscura indotta termicamente risulterebbe eccessivamente elevata.
+
+Il rivelatore Ortec GEM20P utilizzato ha un efficienza del 20% e una risoluzione FWHM di 1.8 keV a 1332 keV (efficienza relativa e risoluzione FWHM vengono fornite per convenzione alla riga 1332 keV).
+Il segnale è acquisito con una catena di lettura classica (tra parentesi le parti integrate nello stesso dispositivo):
+(detector → pre-amplificatore) → (amplificatore → shaper) → ADC/MCA
+
+Determinare le condizioni di lavoro ottimali significa definire quali siano la tensione di polarizzazione e i tempi di formatura tali da minimizzare la risoluzione energetica del rivelatore.
+Per fare questo si studia un picco gamma generato da una sorgente nota (22Na) in funzione della polarizzazione applicata (HV) e del tempo di shaping.
+I tempi di shaping selezionabili sono: 0.5, 1, 2, 3, 6, e 10 μs, mentre le polarizzazioni variano nel range da 2000 a 5000 V (HV e shaping time sono da considerarsi senza errore).
+
+Ai seguenti link trovate gli spettri acquisiti:
+in funzione della polarizzazione: https://bit.ly/34po0mQin funzione dello shaping time: https://bit.ly/34pohpS
+Il nome del file indica l'alta tensione ed il tempo di shaping impostato (per questi ultimi considerate che 005.data → 0.5 μs).
+I dati all'interno di ogni file non rappresentano i campionamenti temporali, come nella precedente esperienza, bensì una distribuzione.
+Avete infatti 8192 righe ognuna delle quali rappresenta il conteggio per il relativo canale (riga 0 ↔ Canale 0, riga 4000 ↔ canale 4000, etc).
+Nell'analizzare gli spettri dovrete valutare voi se variare o meno la dimensione del bin.
+
+Le misure in funzione dell'HV sono state prese con il seguente guadagno: coarse gain = 50 e fine gain = 5. 
+Le misure di shaping time sono state prese nelle condizioni precedenti di guadagno e scegliendo come HV quella che al punto precedente minimizzava la risoluzione.
+
+Per ogni spettro scegliete la riga più intensa andandone a valutare posizione e sigma. Nel modello di fit dovrete anche tener conto del fondo che si va a sovrapporre al picco.
+Quando lo shaping time supera un certo valore potrebbe presentarsi il fenomeno del pile-up. Per gli eventi con pile-up le ampiezze non vengono valutate correttamente e il picco globale risulta deformato; tenetene eventualmente conto nel vostro modello di fit.  
+ 
+Gli obiettivi di questa misura sono:
+Studio delle curve risoluzione vs. HV e risoluzione vs. shaping time e modellizzazione dell'andamento ottenuto;
+Determinazione dei valori di HV e shaping time che ottimizzano la risoluzione; 
+1.3 Calibrazione in energia
+In questa parte si analizzano gli spettri acquisiti utilizzando delle sorgenti note per estrapolare la curva Energia ↔ Canali.
+Il sistema è configurato secondo i parametri ottimi estrapolati nel punto precedente.  
+Le sorgenti utilizzate sono 22Na, 60Co, 228Th, e gli spettri li trovate a questo link: https://bit.ly/39VMDZu.
+Il formato dei file è analogo a quello indicato nel punto precedente.
+Ogni misura è durata 3 minuti; nel link precedente trovate uno spreadsheet con indicate le attività.
+
+Gli obiettivi di questa misura sono:
+Determinazione della curva di calibrazione Energia ↔ Canali, andando a verificare quale sia il miglior modello analitico che si adatti all'andamento sperimentale;
+Studio e modellizzazione della curva della risoluzione in funzione dell'energia andandone ad esplicitare i vari contributi;
+Stima dell'efficienza assoluta del rivelatore alle diverse energie e modellizzazione dell'andamento ottenuto.
+Parte 2 
+2.1 Strumentazione utilizzata
+In questo caso è stata utilizzata la strumentazione presente presso il Laboratorio di Radioattività del Dipartimento di Fisica.  
+Crate NIM Ortec Model 4001A
+Rivelatore coassiale HPGe (Silena)
+Generatore HV Ortec Model 659 per generare la tensione di polarizzazione per il rivelatore (e per alimentare il pre-amplificatore);
+Amplificatore Ortec Model 570 per amplificare e formare il segnale;
+ADC/MCA Ortec 920E per digitalizzare il segnale;
+Sorgente multi-gamma per calibrazione;
+Sorgente ignota.  
+A questo link (https://bit.ly/2XnFTkO) trovate la documentazione relativa alla strumentazione utilizzata.
+Il rivelatore Silena utilizzato è un poco vecchio e non abbiamo documentazione da fornirvi; vi basta sapere che ha un'efficienza del 30% e una risoluzione FWHM di 1.8 keV a 1332 keV.
+Il valore dell'efficienza da una qualche informazione sul volume del rivelatore, quindi significa che questo è un poco più grande del precedente.
+
+Anche qui, il segnale è acquisito con una catena lettura classica (tra parentesi le parti integrate nello stesso dispositivo):
+(detector → pre-amplificatore) → (amplificatore → shaper) → ADC/MCA
+
+2.2 Calibrazione in con sorgente multi-gamma
+Il rivelatore si trova nella condizione ottima dal punto di vista del guadagno, polarizzazione e scelta dello shaping time.
+La misura di calibrazione è effettuata con una sorgente multi-gamma.
+A questo link (https://bit.ly/2yHTfOh) trovate la scheda della sorgente con energie, attività e frequenza di emissione.
+Le attività riportate sono riferite alla data di certificazione presente sulla scheda (01 Gennaio 2013), per le vostre analisi dovrete calcolare le attività al giorno della misura (07 Aprile 2020).
+Visto che la sorgente è vecchia di qualche anno, esiste la probabilità che qualche radionuclide indicato nella scheda non sia più attivo, eventualmente dovete indicare quale.
+L'acquisizione è durata 3600 s con un tempo morto trascurabile. Trovate il live-time della misura anche tra le prime righe del file con lo spettro.
+
+Lo spettro con la misura lo trovate a questo link: https://bit.ly/3e4xrwN
+Nel nome del file è indicato il il codice della sorgente: UW878
+Se aprire il file trovate un header e poi 16384 righe che, nuovamente, descrivono una distribuzione e dove ogni riga rappresenta un canale.
+
+L'obiettivo di questa calibrazione sono:
+Determinazione della la curva di calibrazione Energia ↔ Canali;
+Studio e modellizzazione della curva della risoluzione in funzione dell'energia andandone ad esplicitare i vari contributi;
+Stima dell'efficienza assoluta del rivelatore alle diverse energie e modellizzazione dell'andamento ottenuto;
+Giustificazione del picco presente a 2505 keV, non previsto considerando la sorgente multi-gamma utilizzata.
+2.3 Riconoscimento Sorgente ignota
+Sfruttando la calibrazione del punto precedente dovete analizzare uno spettro ignoto andando a definire quale sia la sorgente che lo ha generato.
+L'acquisizione con la sorgente è durata 81998 s con un tempo morto trascurabile.
+L'acquisizione senza sorgente, necessaria per valutare il fondo naturale, è durata 95330 s con un tempo morto trascurabile.
+
+Lo spettro con la misura lo trovate a questo link: https://bit.ly/3e4xrwN
+Il nome del file con lo spettro ottenuto con la sorgente contiene la stringa YYYYY
+Il nome del file con lo spettro ottenuto senza sorgente contiene la stringa FoSil
+Gli obiettivi di questa misura sono:
+Analisi qualitativa dei picchi, andando a riconoscere i vari radionuclidi e determinando la sorgente primaria utilizzata. 
+I picchi potrebbero essere tanti, iniziate ad individuare quelli più intensi. Un utile strumento per fare questo è il Lund/LBNL database (http://nucleardata.nuclear.lu.se/toi/).
+La misura del fondo naturale vi aiuterà a determinare i reali contributi dovuti alla sorgente;
+Determinazione della curva di risoluzione in funzione dell'energia e determinazione del fattore di Fano (sfruttando il fatto che in questo caso il numero di picchi è ben maggiore rispetto ai precedenti casi).
+Modalità di consegna dei risultati
+Come nel precedente caso, ogni gruppo dovrà consegnare per via telematica un report (quindi più sintetico di una relazione) sull'esperienza.
+Ogni report dovrà comprendere:
+Una breve parte introduttiva dove viene spiegata l'esperienza, compatibilmente con il fatto che non sia stata eseguita da voi in prima persona;
+Una breve descrizione del motivo per cui le prestazioni del rivelatore cambiano in funzione della polarizzazione e dello shaping time spiegando inoltre cosa sia il fenomeno del pile-up.
+Una parte di analisi dei dati ed estrapolazione dei parametri richiesti;
+Una parte di considerazioni sui dati ottenuti, che, se possibile, dovrebbe contenere una parte di confronto tra i due rivelatori. 
+Tali report dovranno essere consegnati attraverso il solito google form (https://bit.ly/2UQMKAq) entro il 27 Aprile 2020 (giorno del mio compleanno per cui siate bravi e puntuali), ore 23:55, e la valutazione andrà a contribuire al voto finale del laboratorio.
+
+Alcuni consigli dopo aver iniziato a leggere i vostri primi report:
+E' buona norma mettere tutti gli spettri e andamenti ottenuti, inserendone alcuni esemplificativi nel testo ed i restanti in appendice;
+Anche eventuali conti e dimostrazioni possono essere inseriti in appendice.
+Per qualsiasi domanda o dubbio non esitate a contattarmi; come accaduto nelle scorse settimana possiamo organizzare video-lezioni e vide-colloqui attraverso le piattaforme ufficiali di ateneo (WebEx e Google Meet). In queste occasioni potrò anche fornivi alcuni commenti sul report precedente.
