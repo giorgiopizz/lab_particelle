@@ -63,6 +63,7 @@ int main(int argc, char** argv)
   func->SetParameter(0,0.005);
   func->SetParameter(1,0);
   TGraphErrors*  graph= new TGraphErrors(argv[1]);
+  graph->SetTitle("Calibrazione con Pulser");
   cnv->cd();
   graph->Draw("AP");
   graph->GetXaxis()->SetTitle("Channels[mV]");
@@ -75,12 +76,11 @@ int main(int argc, char** argv)
   }
 
 
-  /*ofstream myfile;
+  ofstream myfile;
   myfile.open("results_cal.txt");
   myfile <<r->Parameter(0)<< r->ParError(0)<<endl;
   myfile <<r->Parameter(1)<< r->ParError(1)<<endl;
-  myfile <<r->Parameter(2)<< r->ParError(2)<<endl;
-  myfile.close();*/
+  myfile.close();
 
   cnv->Modified();
   cnv->Update();

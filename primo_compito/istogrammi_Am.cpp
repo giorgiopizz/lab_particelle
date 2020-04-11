@@ -43,6 +43,9 @@ bool ReadData(vector<int> &values, string file,int val, int * infos){
         infos[1]=max;
         return true;
 }
+double convert(double x,double m, double q){
+    return m*x+q;
+}
 /*void computeChi2(TH1D* myHisto, TF1* myFun, double& Chi2, double& NDF, double& pvalue)
 {
   double result = 0;
@@ -74,6 +77,11 @@ double fun(double * x, double * par){
 }*/
 int main(int argc, char ** argv){
         //leggo i nomi dei file da leggere e i sample massimi
+        float m,m_err,q,q_err;
+        ifstream myfile("results_cal.txt");
+        myfile >> m >> m_err;
+        myfile >> q >> q_err;
+        myfile.close();
 
         ifstream InFile("test2.txt");
         if(InFile.good()==0)
@@ -120,12 +128,16 @@ int main(int argc, char ** argv){
         cout << "Estremi"<<endl;
         cout << infos[0]<<endl;
         cout << infos[1]<<endl;
-        TH1D * histo= new TH1D("name","title",170, 3930 ,4100);
+        TH1D * histo= new TH1D("name","Am - Counts(Energy)",160, 3940 ,4100);
         for(int i=0;i<valori.size();i++){
             histo->Fill(valori.at(i));
         }
         cnv->cd();
         histo->Draw("same");
+        TF1 * gaussians[4];
+        for (int i=0;i<4;i++){
+            gaussians[i]=new TF1(("function" + to_string(i)).c_str(),"gaus",3000,4200);
+        }
         TF1 * fun = new TF1("fun", "gaus(0)+gaus(3)+gaus(6)+gaus(9)",3000,4200);
 
         fun->SetParName(0,"Ampl1");
@@ -153,6 +165,18 @@ int main(int argc, char ** argv){
         fun->SetParameter(2,10);
         fun->SetParLimits(2,0.5,50);
 
+
+        gaussians[0]->SetParameter(0,300);
+        gaussians[0]->SetParLimits(0,1,500);
+
+        gaussians[0]->SetParameter(1,3963);
+        gaussians[0]->SetParLimits(1,3950,3975);
+
+        gaussians[0]->SetParameter(2,10);
+        gaussians[0]->SetParLimits(2,0.5,50);
+
+
+
         fun->SetParameter(3,1800);
         fun->SetParLimits(3,100,2300);
 
@@ -162,6 +186,19 @@ int main(int argc, char ** argv){
         fun->SetParameter(5,5);
         fun->SetParLimits(5,0.5,20);
 
+
+        gaussians[1]->SetParameter(0,1800);
+        gaussians[1]->SetParLimits(0,100,2300);
+
+        gaussians[1]->SetParameter(1,4002);
+        gaussians[1]->SetParLimits(1,3990,4015);
+
+        gaussians[1]->SetParameter(2,5);
+        gaussians[1]->SetParLimits(2,0.5,20);
+
+
+
+
         fun->SetParameter(6,11000);
         fun->SetParLimits(6,8000,12000);
 
@@ -170,6 +207,18 @@ int main(int argc, char ** argv){
 
         fun->SetParameter(8,10);
         fun->SetParLimits(8,1,50);
+
+
+        gaussians[2]->SetParameter(0,11000);
+        gaussians[2]->SetParLimits(0,8000,12000);
+
+        gaussians[2]->SetParameter(1,4036);
+        gaussians[2]->SetParLimits(1,4025,4045);
+
+        gaussians[2]->SetParameter(2,10);
+        gaussians[2]->SetParLimits(2,1,50);
+
+
 
         fun->SetParameter(9,500);
         fun->SetParLimits(9,10,2000);
@@ -181,57 +230,86 @@ int main(int argc, char ** argv){
         fun->SetParLimits(11,1,50);
 
 
+        gaussians[3]->SetParameter(0,500);
+        gaussians[3]->SetParLimits(0,10,2000);
+
+        gaussians[3]->SetParameter(1,4065);
+        gaussians[3]->SetParLimits(1,4045,4085);
+
+        gaussians[3]->SetParameter(2,5);
+        gaussians[3]->SetParLimits(2,1,50);
+
+
         TFitResultPtr r = histo->Fit("fun","S");
 
+        //histo->Fit("function0+function1+function2+function3");
+
+        for (int i=0;i<4;i++){
+            cout <<"Integrale gaussiana "+to_string(i)+"\t"<<gaussians[i]->Integral(0,5000)<<endl;
+        }
+
+        double sum_gaussians=0;
+        for (int i=0;i<4;i++){
+            sum_gaussians+= gaussians[i]->Integral(0,5000);
+        }
+        for (int i=0;i<4;i++){
+            cout <<"BR "+to_string(i)+"\t"<<gaussians[i]->Integral(0,5000)*100/sum_gaussians<<endl;
+        }
         // float m=1.31729e+00;
         // float m_err=1.45970e-05;
         // float q=2.13569e-01;
         // float q_err=6.73541e-02;
 
 
-        ofstream myfile;
-        float real_energies[4]={5388,5443,5486,5545};
-        myfile.open("results_Am.txt");
-        for(int i=0;i<4;i++){
-            myfile << r->Parameter(3*i+1) <<"\t"<<real_energies[i]<<"\t"<< r->Parameter(3*i+2) <<"\t"<<100<<endl;
-        }
-        myfile.close();
-
-        myfile.open("risoluzione_am.txt");
-        for(int i=0;i<4;i++){
-            myfile << real_energies[i] << "\t" << 2.35*r->Parameter(3*i+2)/r->Parameter(3*i+1) <<"\t"<< 100 <<"\t"<< (2.35*r->Parameter(3*i+2)/r->Parameter(3*i+1))/100 <<endl;
-        }
-        myfile.close();
-
-        myfile.open("fwhm_am.txt");
-        for(int i=0;i<4;i++){
-            myfile << real_energies[i] << "\t" << 2.35*r->Parameter(3*i+2) <<"\t"<< 100 <<"\t"<< (2.35*r->Parameter(3*i+2))/100 <<endl;
-        }
-        myfile.close();
 
 
-        /*
-        float m,m_err,q,q_err,m2,m2_err;
+
+
+        float m,m_err,q,q_err;
         ifstream myfile("results_cal.txt");
         myfile >> m >> m_err;
         myfile >> q >> q_err;
-        myfile >> m2 >> m2_err;
         myfile.close();
+
         float propagazione,s_mx;
         float real_energies[4]={5388,5443,5486,5545};
         for(int i=0;i<4;i++){
             s_mx=abs(m*r->Parameter(3*i+1))*sqrt(pow(m_err/m,2)+pow(r->ParError(3*i+1)/r->Parameter(3*i+1),2));
             propagazione = sqrt(pow(s_mx,2)+pow(q_err,2));
             cout << "Picco americio(Canale):" << "\t" << r->Parameter(3*i+1) <<endl;
-            cout << "Energia calcolata(KeV):" << "\t" << (q+r->Parameter(3*i+1)*m+r->Parameter(3*i+1)*r->Parameter(3*i+1)*m2) <<endl;
+            cout << "Energia calcolata(KeV):" << "\t" << (q+r->Parameter(3*i+1)*m) <<endl;
             cout << "Errore picco(unità canale):" << "\t" << r->ParError(3*i+1) <<endl;
             cout << "Errore energia(KeV):"<< "\t" << propagazione<<endl;
             //cout << r->Parameter(3*i+1) << "\t" << (r->Parameter(3*i+1)*m+q) << "\t" <<  r->ParError(3*i+1) << "\t" <<  << endl;
             cout << "Difference(val-val_true):\t"<< (real_energies[i]-(r->Parameter(3*i+1)*m+q)) <<endl;
             cout << "t:\t"<<abs(real_energies[i]-(r->Parameter(3*i+1)*m+q))/(propagazione) <<"\n\n"<<endl;
-        }*/
+        }
         cnv->Modified();
         cnv->Update();
+
+        ofstream outfile;
+        myfile.open("results_Am.txt");
+        for(int i=0;i<4;i++){
+            myfile << r->Parameter(3*i+1) <<"\t"<<(q+r->Parameter(3*i+1)*m)<<"\t"<< r->Parameter(3*i+2) <<"\t"<<100<<endl;
+        }
+        myfile.close();
+
+        outfile.open("risoluzione_am.txt");
+        for(int i=0;i<4;i++){
+            s_mx=abs(m*r->Parameter(3*i+1))*sqrt(pow(m_err/m,2)+pow(r->ParError(3*i+1)/r->Parameter(3*i+1),2));
+            propagazione = sqrt(pow(s_mx,2)+pow(q_err,2));
+            outfile << (q+r->Parameter(3*i+1)*m) << "\t" << 2.35*r->Parameter(3*i+2)/r->Parameter(3*i+1) <<"\t"<< propagazione <<"\t"<< \
+            2.35*r->Parameter(3*i+2)/r->Parameter(3*i+1)*sqrt(pow((r->ParError(3*i+2)/r->Parameter(3*i+2)),2)+pow((r->ParError(3*i+1)/r->Parameter(3*i+1)),2)) <<endl;
+        }
+        outfile.close();
+
+        outfile.open("fwhm_am.txt");
+        for(int i=0;i<4;i++){
+            s_mx=abs(m*r->Parameter(3*i+1))*sqrt(pow(m_err/m,2)+pow(r->ParError(3*i+1)/r->Parameter(3*i+1),2));
+            propagazione = sqrt(pow(s_mx,2)+pow(q_err,2));
+            outfile << (q+r->Parameter(3*i+1)*m) << "\t" << 2.35*r->Parameter(3*i+2) <<"\t"<< propagazione <<"\t"<< 2.35*r->ParError(3*i+2)<<endl;
+        }
+        outfile.close();
 
 
         //cnv->Print("es.png", "png");

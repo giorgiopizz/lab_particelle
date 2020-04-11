@@ -60,13 +60,17 @@ int main(int argc, char** argv)
   TCanvas* cnv = new TCanvas("myC1","myC1",10,10,1200,800);
   gStyle->SetOptFit(1111);
   //TF1 * func = new TF1("fun", "sqrt(([0]/sqrt(x))^2+[1]^2+([2]*x)^2)",0, 10000);
-  TF1 * func = new TF1("fun", "sqrt([0]*x+[1]*x^2+[2])",0, 10000);
+  TF1 * func = new TF1("fun", "[2]*sqrt([3]*x+[0]*x^2+[1])",0, 10000);
+  func->SetParameter(1,0.1684);
+  func->SetParameter(0,-3e-10);
+  func->SetParameter(2,67);
+  func->SetParameter(3,pow(2.35,2)*0.115*3.6e-3);
   //TF1 * func = new TF1("fun", "pol1",0, 10000);
   //da provare questo qui sotto
   //func->FixParameter(0,pow(2.35,2)*0.115*3.6);
-  func->SetParameter(0,pow(2.35,2)*0.115*3.6);
+  //func->SetParameter(0,pow(2.35,2)*0.115*3.6);
   TGraphErrors*  graph= new TGraphErrors(argv[1]);
-  graph->SetTitle("FWHM Pulser");
+  graph->SetTitle("FWHM Americio");
   cnv->cd();
   graph->Draw("AP");
   graph->GetXaxis()->SetTitle("Energies[KeV]");

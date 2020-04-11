@@ -114,7 +114,7 @@ int main(int argc, char ** argv){
         vector<int> valori;
         vector<float> peaks;
         vector<float> errors;
-        vector<float> resolutions,res_errors,fwhm;
+        vector<float> resolutions,res_errors,fwhm,fwhm_errors;
         for (int i=0;i<files.size();i++){
             valori.clear();
             file=files.at(i);
@@ -153,6 +153,7 @@ int main(int argc, char ** argv){
             resolutions.push_back(2.35*result->Parameter(2)/result->Parameter(1));
             res_errors.push_back(2.35*result->Parameter(2)/result->Parameter(1)*sqrt(pow((result->ParError(2)/result->Parameter(2)),2)+pow((result->ParError(1)/result->Parameter(1)),2)));
             fwhm.push_back(2.35*result->Parameter(2));
+            fwhm_errors.push_back(2.35*result->ParError(2));
             cnv->Modified();
             cnv->Update();
             cnv->Print(("fit_"+energies.at(i)+".png").c_str(), "png");
@@ -167,17 +168,18 @@ int main(int argc, char ** argv){
         ofstream myfile;
         myfile.open("results.txt");
         for(int i=0;i<peaks.size();i++){
-            myfile << peaks.at(i) <<"\t"<<stof(energies.at(i).substr(0,4))*1000<<"\t"<<errors.at(i)<<"\t"<<10<<endl;
+            //errore 1% per l'energia
+            myfile << peaks.at(i) <<"\t"<<stof(energies.at(i).substr(0,4))*1000<<"\t"<<errors.at(i)<<"\t"<<stof(energies.at(i).substr(0,4))*10<<endl;
         }
         myfile.close();
         myfile.open("risoluzione_pulser.txt");
         for(int i=0;i<peaks.size();i++){
-            myfile <<stof(energies.at(i).substr(0,4))*1000<<"\t"<< resolutions.at(i) <<"\t"<< 100<<"\t"<< res_errors.at(i) <<endl;
+            myfile <<stof(energies.at(i).substr(0,4))*1000<<"\t"<< resolutions.at(i) <<"\t"<< stof(energies.at(i).substr(0,4))*10<<"\t"<< res_errors.at(i) <<endl;
         }
         myfile.close();
         myfile.open("fwhm_pulser.txt");
         for(int i=0;i<peaks.size();i++){
-            myfile <<stof(energies.at(i).substr(0,4))*1000<<"\t"<< fwhm.at(i) <<"\t"<< 100<<"\t"<< fwhm.at(i)/100 <<endl;
+            myfile <<stof(energies.at(i).substr(0,4))*1000<<"\t"<< fwhm.at(i) <<"\t"<< stof(energies.at(i).substr(0,4))*10<<"\t"<< fwhm_errors.at(i) <<endl;
         }
         myfile.close();
 

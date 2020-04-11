@@ -59,12 +59,23 @@ int main(int argc, char** argv)
 */
   TCanvas* cnv = new TCanvas("myC1","myC1",10,10,1200,800);
   gStyle->SetOptFit(1111);
-  //TF1 * func = new TF1("fun", "sqrt(([0]/sqrt(x))^2+[1]^2+([2]*x)^2)",0, 10000);
-  TF1 * func = new TF1("fun", "[0]/sqrt(x)+[1]",0, 10000);
+  //TF1 * func = new TF1("fun", "[2]*sqrt([3]*x+[0]*x^2+[1])/x",0, 10000);
+  //TF1 * func = new TF1("fun", "[0]/sqrt(x)+[1]",0, 10000);
   //TF1 * func = new TF1("fun", "pol1",0, 10000);
-  func->SetParameter(0,0.005);
+  /*
+  pulser
+  TF1 * func = new TF1("fun", "[2]*sqrt([0]*x^2+[1])/x",0, 10000);
+  func->SetParameter(1,0.1684);
+  func->SetParameter(0,-3e-10);
+  func->SetParameter(2,67);*/
+
+  TF1 * func = new TF1("fun", "[2]*sqrt([3]*x+[0]*x^2+[1])/x",0, 10000);
+  func->SetParameter(0,-1.45e-5);
+  func->SetParameter(1,467);
+  func->SetParameter(2,6);
+  func->SetParameter(3,-0.0022);
   TGraphErrors*  graph= new TGraphErrors(argv[1]);
-  graph->SetTitle("Ris. Pulser");
+  graph->SetTitle("Ris. Am");
   cnv->cd();
   graph->Draw("AP");
   graph->GetXaxis()->SetTitle("Energies[KeV]");
@@ -73,7 +84,7 @@ int main(int argc, char** argv)
   float x[4]={3.96971e+03,4.00621e+03,4.03594e+03,4.06157e+03};
   float y_real[4]={5388,5443,5486,5545};
   for(int i=0;i<4;i++){
-      cout<< x[i]<<" :\t"<<func->Eval(x[i])<<"\t"<<y_real[i]-func->Eval(x[i])<<endl;
+      cout<< y_real[i]<<" :\tRisoluzione:"<<func->Eval(y_real[i])*y_real[i]<<endl;
   }
 
 
